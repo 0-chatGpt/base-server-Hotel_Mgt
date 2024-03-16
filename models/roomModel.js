@@ -4,13 +4,13 @@ const {model, Schema, default:mongoose} = require("mongoose");
 
 
 const RoomSchema = new Schema({
-    _id: Schema.Types.ObjectId,
+    _id: Schema.ObjectId,
     name: {
         type: String,
         required: true,
     },
     roomType: {
-        type: Schema.Types.ObjectId,
+        type: Schema.ObjectId,
         ref: "RoomType",
     },
     price: {

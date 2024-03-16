@@ -4,7 +4,7 @@ const {model, Schema, default:mongoose} = require("mongoose");
 
 
 const RoomTypeSchema = new Schema({
-    _id: Schema.Types.ObjectId,
+    _id: Schema.ObjectId,
     name: {
         type: String,
         required: true,
@@ -12,5 +12,5 @@ const RoomTypeSchema = new Schema({
 },{ timestamps: true, })
 
 
-module.exports = models("roomType", RoomTypeSchema);
+module.exports = model("roomType", RoomTypeSchema);
 
