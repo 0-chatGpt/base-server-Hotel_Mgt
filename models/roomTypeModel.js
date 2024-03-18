@@ -4,7 +4,7 @@ const {model, Schema, default:mongoose} = require("mongoose");
 
 
 const RoomTypeSchema = new Schema({
-    _id: Schema.ObjectId,
+    _id: Schema.Types.ObjectId,
     name: {
         type: String,
         required: true,

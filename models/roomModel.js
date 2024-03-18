@@ -1,16 +1,17 @@
 "use strict";
 
+const roomType = require("./roomTypeModel.js");
 const {model, Schema, default:mongoose} = require("mongoose");
 
 
 const RoomSchema = new Schema({
-    _id: Schema.ObjectId,
+    _id: Schema.Types.ObjectId,
     name: {
         type: String,
         required: true,
     },
     roomType: {
-        type: Schema.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "RoomType",
     },
     price: {
