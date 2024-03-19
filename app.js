@@ -3,76 +3,58 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const Controller = require("./controllers/controller.js");
+const {Controller, appResponse} = require("./controllers/controller.js");
 const db = require("./database/database.js");
 const cors = require("cors");
 mongoose.set('strictQuery', false);
 
 const app = express();
-const baseUrl = `http://localhost:${process.env.PORT}`
-
-// Mongodb connect
+// // Using middlewares
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+// // Mongodb connect
 db(!true);
 const controller = new Controller();
-// Using middlewares
-app.use(cors);
 
 
-// filters
-let searchRoomMaximumPriceMatch;
-let searchRoomMinimumPriceMatch;
-let searchRoomNameMatch;
-let searchRoomTypeNameMatch;
+// /** client get request  */
 
-/** client get request  */
-
-app.get('/', (req, res) => {
+app.get(`/`, (req, res) => {
     res.send(`<h1>Hello World</h1>`)
 });
 
-app.get(`${baseUrl}/api/v1/rooms-types`, controller.getAllRoomTypes);
 
-app.get(`${baseUrl}/api/v1/rooms?search=${searchRoomNameMatch}&roomType=${searchRoomTypeNameMatch}&minPrice=${searchRoomMinimumPriceMatch}&maxPrice=${searchRoomMaximumPriceMatch}`,controller.roomSelector);
+app.get(`/api/v1/rooms-types`, controller.getAllRoomTypes);
 
-app.get(`${baseUrl}/api/v1/rooms/:roomId`,controller.roomSelector);
+app.get(`/api/v1/rooms`,controller.roomSelectorQuery);
 
-
-/** end  */
-
-/** client post request  */
+app.get(`/api/v1/rooms/:roomId`,controller.roomSelector);
 
 
-app.post(`${baseUrl}/api/v1/rooms-types`, controller.createRoomType);
+// /** end  */
 
-app.post(`${baseUrl}/api/v1/rooms`,controller.createSomeRoom);
+// /** client post request  */
 
 
-/** end  */
+app.post(`/api/v1/rooms-types`, controller.createRoomType);
 
-/** Other methods */
+app.post(`/api/v1/rooms`,controller.createSomeRoom);
 
-app.patch(`{${baseUrl}}/api/v1/rooms/:roomId`, controller.roomEdit);
 
-app.delete(`{${baseUrl}}/api/v1/rooms/:roomId`, controller.roomTrash);
+// /** end  */
 
-/** end */
+// /** Other methods */
+
+app.patch(`/api/v1/rooms/:roomId`, controller.roomEdit);
+
+app.delete(`/api/v1/rooms/:roomId`, controller.roomTrash);
+
+// /** end */
 
 app.listen(process.env.PORT, ()=>{
-    console.log(`Example app listening on port ${process.env.PORT}`);
-})
+    console.log(`app listening on port ${process.env.PORT}`);
+});
 
-/**
- * function rin(){
- * 
- * }
- * 
- * const rit = function (){
- * 
- * }
- * 
- * const ad = () => {
- * 
- * }
- * 
- */
+
 
