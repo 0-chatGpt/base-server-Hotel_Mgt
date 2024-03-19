@@ -87,7 +87,7 @@ class Controller {
             if (!isEmpty(filter)){
                 if (filter.search) command.name = filter.search;
                 if (filter.roomType) command.roomType = filter.roomType;
-                if ((filter.maxPrice? filter.maxPrice: false) > (filter.minPrice ? filter.minPrice : 0 )){
+                if ((filter.maxPrice ? filter.maxPrice: false) > (filter.minPrice ? filter.minPrice : 0 )){
                     if (filter.maxPrice) command.price = { $lt: filter.maxPrice, $gt: 0};
                     if (filter.minPrice) command.price = { $gt: filter.minPrice, $lt: filter.maxPrice};}
                 
@@ -99,6 +99,7 @@ class Controller {
                 const roomResult = await room.find(command);
                 console.log(roomResult);
                 if(roomResult) return appResponse(res, 201, "Room is available");
+                return appResponse(res, 300, "Query unsucessful");
             }
          return appResponse(res, 400, "Its from the user" + filter)
         } catch (error) {
