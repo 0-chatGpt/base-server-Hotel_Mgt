@@ -8,9 +8,10 @@ const RoomTypeSchema = new Schema({
     name: {
         type: String,
         required: true,
+        lowercase: true,
     },
 },{ timestamps: true, })
 
 
-module.exports = model("roomType", RoomTypeSchema);
+module.exports = new model("roomType", RoomTypeSchema);
 

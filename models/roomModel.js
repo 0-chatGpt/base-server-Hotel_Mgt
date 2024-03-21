@@ -12,7 +12,7 @@ const RoomSchema = new Schema({
     },
     roomType: {
         type: Schema.Types.ObjectId,
-        ref: "RoomType",
+        ref: roomType,
     },
     price: {
         type: Number,
@@ -24,4 +24,4 @@ const RoomSchema = new Schema({
 });
 
 
-module.exports = model("room", RoomSchema);
+module.exports = new model("room", RoomSchema);

@@ -1,6 +1,7 @@
 "use strict";
 
-function isEmptyObject(value) {
+class Util{
+  isEmptyObject(value) {
     if (value == null) {
       // null or undefined
       return false;
@@ -19,18 +20,30 @@ function isEmptyObject(value) {
       return false;
     }
   
-    return isEmpty(value);
-  }
-
-  function isEmpty(obj) {
-    for (const prop in obj) {
-      if (Object.hasOwn(obj, prop)) {
+    for (const prop in value) {
+      if (Object.hasOwn(value, prop)) {
         return false;
       }
     }
-  
+
     return true;
   }
 
+  // isEmpty(obj) {
+  //   for (const prop in obj) {
+  //     if (Object.hasOwn(obj, prop)) {
+  //       return false;
+  //     }
+  //   }
+  
+  //   return true;
+  // }
 
-module.exports = isEmptyObject;
+  appResponse = (res, statusCode, message, data) => {
+    const checkIfSuccess = statusCode?.toString()?.startsWith('2');
+
+    return res.status(statusCode).json({success: checkIfSuccess ? true : false, message, data: data ?? null });
+  }
+}
+
+module.exports = new Util();

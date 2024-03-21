@@ -1,7 +1,7 @@
 const room = require("../models/roomModel.js");
 const roomType = require("../models/roomTypeModel.js");
 const mongoose = require("mongoose");
-const isEmpty = require("./utility.js");
+const {isEmpty, appResponse} = require("./utility.js");
 
 
 
@@ -110,11 +110,4 @@ class Controller {
     }
 }
 
-
-const appResponse = (res, statusCode, message, data) => {
-    const checkIfSuccess = statusCode?.toString()?.startsWith('2');
-
-    return res.status(statusCode).json({success: checkIfSuccess ? true : false, message, data: data ?? null });
-}
-
-module.exports = {Controller, appResponse};
+module.exports = Controller;
