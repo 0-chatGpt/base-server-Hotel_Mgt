@@ -48,6 +48,8 @@ class Roomcontroller{
             let room = await service.delete(Id);
 
             if (room) return appResponse(res, 200, "Entry Deleted", room);
+
+            return appResponse(res, 300, "Item does not exist");
         } catch (error) {
             const errorMessage = error.message;
             return appResponse(res, 401, errorMessage);

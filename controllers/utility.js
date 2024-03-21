@@ -41,7 +41,7 @@ class Util{
 
   appResponse = (res, statusCode, message, data) => {
     const checkIfSuccess = statusCode?.toString()?.startsWith('2');
-
+    // if (auth) return res.status(statusCode).header("auth", auth).json({success: checkIfSuccess ? true : false, message, data: data ?? null });
     return res.status(statusCode).json({success: checkIfSuccess ? true : false, message, data: data ?? null });
   }
 }
