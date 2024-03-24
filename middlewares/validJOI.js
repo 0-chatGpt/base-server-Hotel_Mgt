@@ -11,7 +11,7 @@ const userSchema = joi.object({
 })
 
 const validateUser = function(req, res, next){
-    const result = userSchema.validate(req.body, {abortEarly: false});
+    const result = userSchema.validate(req.body, {abortEarly: false, allowUnknown:true});
     if (result.error) return appResponse(res, 422, `"invalid request data ${result.error.details.map(err => err.message)}"`);
 
     next();

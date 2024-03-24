@@ -77,18 +77,16 @@ class Roomcontroller{
             if (!isEmptyObject(filter)){
                 if (filter.search) command.name = filter.search;
                 if (filter.roomType) command.roomType = filter.roomType;
-                if ((filter.maxPrice ? filter.maxPrice: false) > (filter.minPrice ? filter.minPrice : 0 )){
-                    if (filter.maxPrice) command.price = { $lt: filter.maxPrice, $gt: 0};
-                    if (filter.minPrice) command.price = { $gt: filter.minPrice, $lt: filter.maxPrice};}
-                
-                
-                // res.send('Simple');
-                console.log(command);
-
-                // console.log(filter);
-                const roomResult = await service.query(command);
-                console.log(roomResult);
-                if(roomResult) return appResponse(res, 201, "Room is available");
+                if ((filter.minPrice)) command.price = {$gt: Number(filter.minPrice)};    
+                if ((filter.maxPrice ? filter.maxPrice: Boolean(false)) > (filter.minPrice ? filter.minPrice : 0 )){
+                    if (filter.maxPrice) command.price = { $lt: Number(filter.maxPrice), $gt: 0};
+                    if (filter.minPrice) command.price = { $gt: Number(filter.minPrice), $lt: Number(filter.maxPrice)};}
+        
+                    
+                if(!isEmptyObject(command)){
+                    const roomResult = await service.query(command);
+                    if(roomResult.length > 0) return appResponse(res, 201, "Room is available");
+                }
                 return appResponse(res, 300, "Query unsucessful");
             }
             return appResponse(res, 400, "Its from the user" + filter);

@@ -15,10 +15,10 @@ const User = new Schema({
         type: String,
         require: true,
     },
-    elect : {
+    chosen : {
         type: Boolean,
         require: true,
-    }
+    },
 });
 
 module.exports = new model("User", User);

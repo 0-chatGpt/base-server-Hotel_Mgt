@@ -16,10 +16,10 @@ class UserController{
                 const salt = await bcrypt.genSalt(10);
                 const hasPassword = await bcrypt.hash(req.body.password, salt);
                 data.password = hasPassword;
-                data.elect = data.elect? data.elect: 0;
+                data.chosen = data.chosen ? data.chosen : false;
                 const addUser = await service.create(data);
                 if(!addUser) return appResponse(res, 300, "Resource creation failed");
-                let payload = {id: addUser._id, elect: data.elect || 0};
+                let payload = {id: addUser._id, chosen: data.chosen || 0};
                 const token = jwt.sign(payload, process.env.TOKEN_SECRET);
                 return appResponse(res, 200, `Token: ${token}`, addUser, token);
             }
@@ -38,7 +38,7 @@ class UserController{
                     const validPass = await bcrypt.compare(data.password, user[0].password);
                     if(!validPass) return appResponse(res, 401, "Name/Email or Password is wrong");
 
-                    let payload = {id: user._id, elect: user.elect || 0};
+                    let payload = {id: user[0]._id, chosen: user[0].chosen || 0};
                     const token = jwt.sign(payload, process.env.TOKEN_SECRET);
                     res.header("auth", token);
                     return appResponse(res, 200, `Token: ${token}`, user);
