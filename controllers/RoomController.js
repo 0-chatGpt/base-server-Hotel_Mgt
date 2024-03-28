@@ -23,13 +23,13 @@ class Roomcontroller{
     async createRoom(req,res){
         try {
             const data = {...req.body};
-            const Type = roomTypeService.fetch({name: data.roomType.toLowerCase()});
+            const Type = await roomTypeService.fetch({name: data.roomType.toLowerCase()});
 
-            if (!Type) console.log("RoomType does not exist"); 
+            if (Type.length < 1) console.log("RoomType does not exist"); 
 
             if(!isEmptyObject(data)){
                 data._id = new mongoose.Types.ObjectId();
-                data.roomType = Type._id;
+                data.roomType = Type[0]._id;
                 const addRoom = await service.create(data);
                 if (addRoom) return appResponse(res, 200, "Resource created successfully.", addRoom);
 
